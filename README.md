@@ -1,2 +1,2 @@
 # FolderWatcher
-Tool watch user configured folders in  the filesystem and posts toast messages as soon as a watched change occurs
+Tool to watch user configured folders in the filesystem. Toast messages are posted as soon as a watched change occurs.
