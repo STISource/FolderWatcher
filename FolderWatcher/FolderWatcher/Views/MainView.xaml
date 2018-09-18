@@ -2,23 +2,100 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FolderWatcher"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:tb="http://www.hardcodet.net/taskbar"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <tb:TaskbarIcon ToolTipText="hello world"
-                        IconSource="../Icons/FolderWatcher.ico">
+
+        <Grid.Resources>
+            <CollectionViewSource x:Key="GroupedNotifications"                                   
+                                  Source="{Binding Notifications}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Notification.Folder" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>       
+
+
+        <tb:TaskbarIcon Name="WatcherTaskbarIcon" IconSource="../Icons/FolderWatcher.ico">
             <tb:TaskbarIcon.TrayToolTip>
-                <Grid Width="100" Height="100" Background="White">
-                    <TextBlock Text="Super Tool Tip" />
-                </Grid>
+                <Border Background="White" BorderBrush="DarkGray" BorderThickness="1">
+                    <TextBlock Padding="3" Text="{Binding ToolTip}" />
+                </Border>
             </tb:TaskbarIcon.TrayToolTip>
             <tb:TaskbarIcon.TrayPopup>
-                <Grid Width="200" Height="200" Background="Red">
-                    <TextBlock Text="Super Tool Tip" />
-                </Grid>
+                
+                <Border Width="320"
+                        Height="500" 
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Background="White" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="35" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0"
+                              Background="LightBlue">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="14" Text="Neue Dateien" />
+                            <Button Grid.Column="1" Margin="2" Command="{Binding DismissAll}" Content="Liste leeren" />
+                        </Grid>
+                            
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding Source={StaticResource GroupedNotifications}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="5*" />
+                                                <ColumnDefinition Width="1*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="{Binding Notification.ChangeDate, StringFormat=g}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Notification.File}" />                                            
+                                            <TextBlock Grid.Column="2">
+                                                <Hyperlink Command="{Binding Dismiss}">Hab's!</Hyperlink>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="0,3,0,0" BorderBrush="DarkGray" BorderThickness="0,0,0,1">
+                                                    <TextBlock FontWeight="Bold"
+                                                                Text="{Binding Name}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                    </GroupStyle>
+                                </ListView.GroupStyle>
+                            </ListView>
+                        </ScrollViewer>
+
+                        <Grid Grid.Row="2"
+                              Background="LightBlue">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="1" Margin="2" Command="{Binding OpenSettings}" Content="Einstellungen" />
+                        </Grid>
+                    </Grid>
+                </Border>
+                
             </tb:TaskbarIcon.TrayPopup>
         </tb:TaskbarIcon>
     </Grid>

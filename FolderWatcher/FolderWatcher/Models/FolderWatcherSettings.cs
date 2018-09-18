@@ -7,6 +7,6 @@ namespace FolderWatcher.Models
     public class FolderWatcherSettings
     {
         [DataMember]
-        ObservableCollection<FolderDetails> Folders { get; set; }
+        public ObservableCollection<FolderDetails> Folders { get; set; }
     }
 }

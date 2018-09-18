@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FolderWatcher.Models;
 using LiteDB;
@@ -11,6 +12,29 @@ namespace FolderWatcher.Services
         public const string DatabaseName = @"FolderSnapshots.db";
         public const string CollectionName = @"FolderSnapshots";
 
+        public FolderContentSnapshot CreateSnapshot(FolderDetails folder)
+        {
+            var snapshot = new FolderContentSnapshot();
+
+            var existingFiles = Directory.GetFiles(folder.FolderName, "*", SearchOption.TopDirectoryOnly);
+
+            foreach (var file in existingFiles)
+            {                
+                var fileInfo = new FileInfo(file);
+                snapshot.Files.Add(new FileDetails
+                {
+                    FileName = file,
+                    ChangeDate = fileInfo.LastWriteTime,
+                    FolderId = folder.FolderId                    
+                });    
+            }
+
+            snapshot.FolderId = folder.FolderId;
+            snapshot.SnapshotDate = DateTime.Now;            
+
+            return snapshot;
+        }
+
         public FolderContentSnapshot ReadSnapshot(Guid folderId)
         {
             FolderContentSnapshot result = null;
@@ -20,7 +44,7 @@ namespace FolderWatcher.Services
                 // Open collection 
                 var snapshots = database.GetCollection<FolderContentSnapshot>(CollectionName);
                                 
-                result = snapshots.Find(x => x.FolderId == folderId).FirstOrDefault();
+                result = snapshots.Find(x => x.FolderId == folderId).SingleOrDefault();
                    
                 // create empty snapshot of nothing has been found
                 if (result == null)
@@ -29,7 +53,7 @@ namespace FolderWatcher.Services
                     {
                         FolderId = folderId,
                         SnapshotDate = DateTime.Now,
-                        Files = new List<FileInfo>()
+                        Files = new List<FileDetails>()
                     };
 
                     // add newly created snapshot to database to ensure its existance in future

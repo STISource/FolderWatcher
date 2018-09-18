@@ -8,5 +8,7 @@ namespace FolderWatcher.Services
         void UpdateSnapshot(FolderContentSnapshot snapshot);
 
         FolderContentSnapshot ReadSnapshot(Guid folderId);
+
+        FolderContentSnapshot CreateSnapshot(FolderDetails folder);
     }
 }

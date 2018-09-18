@@ -12,5 +12,10 @@ namespace FolderWatcher.Models
         public Guid FolderId { get; set; }
 
         public IList<FileDetails> Files { get; set; }
+
+        public FolderContentSnapshot()
+        {
+            this.Files = new List<FileDetails>();
+        }
     }
 }

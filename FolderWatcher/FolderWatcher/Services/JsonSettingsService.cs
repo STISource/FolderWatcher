@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -33,10 +34,20 @@ namespace FolderWatcher.Services
                     }
                 }
 
-                return settings ?? new FolderWatcherSettings();
+                return settings ?? new FolderWatcherSettings
+                {
+                    Folders = new ObservableCollection<FolderDetails>()
+                };
             }
 
-            return new FolderWatcherSettings();
+            var blankSettings = new FolderWatcherSettings
+            {
+                Folders = new ObservableCollection<FolderDetails>()
+            };
+
+            this.SaveSettings(blankSettings);
+            
+            return blankSettings;
         }
 
         public void SaveSettings(FolderWatcherSettings settings)

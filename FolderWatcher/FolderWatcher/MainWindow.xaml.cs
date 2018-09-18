@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using FolderWatcher.Services;
 using FolderWatcher.ViewModels;
-using FolderWatcher.Views;
+using FolderWatcher.Worker;
 using Unity;
 
 namespace FolderWatcher
@@ -16,12 +16,15 @@ namespace FolderWatcher
             InitializeComponent();
 
             var container = new UnityContainer();
-            container.RegisterType<ISettingsService, JsonSettingsService>();            
+            container.RegisterInstance<ISettingsService>(new JsonSettingsService());
+            container.RegisterInstance<IFolderContentSnapshotService>(new NoSqlSnapshotService());
+            container.RegisterInstance<INotificationHistoryService>(new NoSqlNotificationHistoryService());
+            container.RegisterInstance<IWindowManager>(new WindowManager(this));
+            container.RegisterType<IFolderWatcher, ComparativeFolderWatcher>();
 
-            var view = new MainView();
-            view.DataContext = new MainViewModel(container);
+            container.Resolve<IWindowManager>().LoadMainView(new MainViewModel(container));
 
-            this.ContentView.Content = view;
+            this.Hide();
         }        
     }
 }

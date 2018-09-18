@@ -1,0 +1,43 @@
+﻿<Window x:Class="FolderWatcher.Views.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FolderWatcher.Views"
+        mc:Ignorable="d"
+        Title="Einstellungen" Height="300" Width="497" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/FolderWatcher;component/Icons/FolderWatcher.ico" WindowStyle="None" Topmost="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">                
+                <TextBlock Margin="10,0,10,0"><Hyperlink Command="{Binding RemoveFolder}">Löschen</Hyperlink></TextBlock>
+                <TextBlock Margin="10,0,10,0"><Hyperlink Command="{Binding AddFolder}">Neu</Hyperlink></TextBlock>
+            </StackPanel>
+            <DataGrid Name="FoldersDataGrid"
+                        Grid.Row="1" 
+                        ItemsSource="{Binding Settings.Folders}" 
+                        SelectedItem="{Binding SelectedFolder}" 
+                        AutoGenerateColumns="False"
+                        VerticalScrollBarVisibility="Auto"                      
+                        CanUserAddRows="False"
+                        Margin="3">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ordner" SortMemberPath="DisplayName" Binding="{Binding FolderName}" />                
+                </DataGrid.Columns>            
+            </DataGrid>
+        </Grid>
+
+        <StackPanel Background="LightBlue" Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
+            <Button Margin="2" Command="{Binding Cancel}" Content="Abbrechen" />
+            <Button Margin="2" Command="{Binding SaveSettings}" Content="Fertig" />
+        </StackPanel>
+    </Grid>
+</Window>

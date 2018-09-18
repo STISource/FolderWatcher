@@ -7,7 +7,7 @@ namespace FolderWatcher.Worker
 {
     public static class FolderContentComparer
     {
-        public static IList<FileDetails> GetNewFiles(FolderDetails folderDetails, FolderContentSnapshot snapshot)
+        public static IEnumerable<FileDetails> GetNewFiles(FolderDetails folderDetails, FolderContentSnapshot snapshot)
         {
             var newFiles = new List<FileDetails>();
 

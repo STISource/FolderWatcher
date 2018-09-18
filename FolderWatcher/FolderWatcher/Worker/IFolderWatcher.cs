@@ -1,6 +1,7 @@
-﻿using FolderWatcher.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using FolderWatcher.Models;
 
 namespace FolderWatcher.Worker
 {
@@ -12,7 +13,7 @@ namespace FolderWatcher.Worker
 
         void StopWatching();
 
-        event FolderContentChangedEventHandler InputArchiveChanged;
+        event FolderContentChangedEventHandler FolderContentChanged;
     }
 
     public class FolderContentChangedEventArgs : EventArgs
