@@ -3,12 +3,15 @@ using System.Windows.Input;
 using FolderWatcher.Helpers;
 using FolderWatcher.Models;
 using FolderWatcher.Services;
+using NLog;
 using Unity;
 
 namespace FolderWatcher.ViewModels
 {
     public class NotificationViewModel
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private readonly IUnityContainer iocContainer;
 
         public event EventHandler OnDismiss;
@@ -29,11 +32,13 @@ namespace FolderWatcher.ViewModels
 
         public void DismissNotification()
         {
+            logger.Info("Dismiss single notification");
             this.OnDismiss?.Invoke(this, EventArgs.Empty);
         }
 
         private void OpenFileInExplorer()
         {
+            logger.Info("Open file in explorer");
             var service = this.iocContainer.Resolve<IExternalProgramService>();
             service.OpenWinExplorerWithFileSelected(this.Notification.Folder + "\\" + this.Notification.File);
         }

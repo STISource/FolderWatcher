@@ -9,6 +9,7 @@ using FolderWatcher.Models;
 using FolderWatcher.Properties;
 using FolderWatcher.Services;
 using FolderWatcher.Worker;
+using NLog;
 using Unity;
 using Unity.Interception.Utilities;
 
@@ -16,6 +17,8 @@ namespace FolderWatcher.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private readonly IUnityContainer iocContainer;
 
         private readonly INotificationHistoryService notificationHistoryService;
@@ -58,6 +61,7 @@ namespace FolderWatcher.ViewModels
 
         private void ReapplySettings()
         {
+            logger.Info("Reapplying settings ...");
             // clear everything that has been wired up so far
             this.StopWatching();
 
@@ -89,6 +93,7 @@ namespace FolderWatcher.ViewModels
 
         private void FolderContentChanged(object sender, FolderContentChangedEventArgs args)
         {
+            logger.Info("Folder content changed. Files have been added: {0}", string.Join(", ", args.CreatedFiles.Select(x => x.FileName)));
             foreach(var file in args.CreatedFiles)
             {
                 App.Current.Dispatcher.Invoke((Action)delegate
@@ -110,7 +115,8 @@ namespace FolderWatcher.ViewModels
             // remove notifications for files already removed 
             var notificationsToRemove = this.Notifications.Where(x => !System.IO.File.Exists(x.Notification.Folder + "\\" + x.Notification.File)).ToList();
             foreach(var vm in notificationsToRemove)
-            {                
+            {
+                logger.Info("Removing notification for deleted file: {0}", vm.Notification.File);
                 App.Current.Dispatcher.Invoke((Action)delegate
                 {
                     vm.DismissNotification();
@@ -124,6 +130,7 @@ namespace FolderWatcher.ViewModels
 
         private void DismissAllNotifications()
         {
+            logger.Info("Dismiss all notifications");
             foreach(var vm in this.Notifications)
             {
                 vm.OnDismiss -= this.NotificationDismissed;

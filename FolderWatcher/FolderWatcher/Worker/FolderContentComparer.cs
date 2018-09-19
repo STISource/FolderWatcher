@@ -7,7 +7,7 @@ namespace FolderWatcher.Worker
 {
     public static class FolderContentComparer
     {
-        public const string excludeFile = "thumbs.db";
+        private static string[] excludedFiles = { "thumbs.db", ".ppinfocache" };
 
         public static IEnumerable<FileDetails> GetNewFiles(FolderDetails folderDetails, FolderContentSnapshot snapshot)
         {
@@ -17,7 +17,9 @@ namespace FolderWatcher.Worker
 
             foreach(var file in existingFiles)
             {
-                if(file.ToLower().EndsWith(excludeFile))
+                var fileNameOnly = file.Substring(file.LastIndexOf('\\') + 1).ToLower();
+
+                if (excludedFiles.Contains(fileNameOnly))
                 {
                     continue;
                 }
