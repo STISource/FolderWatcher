@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:tb="http://www.hardcodet.net/taskbar"
+             xmlns:p="clr-namespace:FolderWatcher.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -45,8 +46,8 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="14" Text="Neue Dateien" />
-                            <Button Grid.Column="1" Margin="2" Command="{Binding DismissAll}" Content="Liste leeren" />
+                            <TextBlock Grid.Column="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="14" Text="{x:Static p:Resources.NotificationsNewFiles_Title}" />
+                            <Button Grid.Column="1" Margin="2" Command="{Binding DismissAll}" Content="{x:Static p:Resources.EmptyNotificationsList}" />
                         </Grid>
                             
                         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
@@ -67,8 +68,10 @@
                                                    <TextBlock Text="{Binding Notification.File}" />
                                                </Hyperlink>
                                             </TextBlock>
-                                            <TextBlock Grid.Column="2" Margin="5,0,0,0">
-                                                <Hyperlink Command="{Binding Dismiss}">Hab's!</Hyperlink>
+                                            <TextBlock Grid.Column="2" Margin="5,0,0,2">
+                                                <Hyperlink Command="{Binding Dismiss}">
+                                                    <TextBlock Text="{x:Static p:Resources.DismissSingleNotification_LinkText}" />
+                                                </Hyperlink>
                                             </TextBlock>
                                         </Grid>
                                     </DataTemplate>
@@ -95,12 +98,17 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Column="1" Margin="2" Command="{Binding OpenSettings}" Content="Einstellungen" />
+                            <Button Grid.Column="1" Margin="2" Command="{Binding OpenSettings}" Content="{x:Static p:Resources.OpenSettingsWindow}" />
                         </Grid>
                     </Grid>
                 </Border>
                 
             </tb:TaskbarIcon.TrayPopup>
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static p:Resources.ShutdownApplication}" Command="{Binding ExitApplication}" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
     </Grid>
 </UserControl>

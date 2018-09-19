@@ -22,7 +22,7 @@ namespace FolderWatcher.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace FolderWatcher.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FolderWatcher.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace FolderWatcher.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,27 @@ namespace FolderWatcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Got it!.
+        /// </summary>
+        public static string DismissSingleNotification_LinkText {
+            get {
+                return ResourceManager.GetString("DismissSingleNotification_LinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liste leeren.
+        /// </summary>
+        public static string EmptyNotificationsList {
+            get {
+                return ResourceManager.GetString("EmptyNotificationsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Neue Dateien.
         /// </summary>
-        internal static string NewFilesDetected_Title {
+        public static string NewFilesDetected_Title {
             get {
                 return ResourceManager.GetString("NewFilesDetected_Title", resourceCulture);
             }
@@ -72,7 +90,7 @@ namespace FolderWatcher.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} neue Dateien gefunden..
         /// </summary>
-        internal static string NewFilesNotification {
+        public static string NewFilesNotification {
             get {
                 return ResourceManager.GetString("NewFilesNotification", resourceCulture);
             }
@@ -81,9 +99,72 @@ namespace FolderWatcher.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Es sind keine neuen Dateien vorhanden..
         /// </summary>
-        internal static string NoNewFilesNotification {
+        public static string NoNewFilesNotification {
             get {
                 return ResourceManager.GetString("NoNewFilesNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neue Dateien.
+        /// </summary>
+        public static string NotificationsNewFiles_Title {
+            get {
+                return ResourceManager.GetString("NotificationsNewFiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string OpenSettingsWindow {
+            get {
+                return ResourceManager.GetString("OpenSettingsWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neu.
+        /// </summary>
+        public static string Settings_AddFolder_LinkText {
+            get {
+                return ResourceManager.GetString("Settings_AddFolder_LinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string Settings_Cancel {
+            get {
+                return ResourceManager.GetString("Settings_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Löschen.
+        /// </summary>
+        public static string Settings_RemoveFolder_LinkText {
+            get {
+                return ResourceManager.GetString("Settings_RemoveFolder_LinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fertig.
+        /// </summary>
+        public static string Settings_Save {
+            get {
+                return ResourceManager.GetString("Settings_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beenden.
+        /// </summary>
+        public static string ShutdownApplication {
+            get {
+                return ResourceManager.GetString("ShutdownApplication", resourceCulture);
             }
         }
     }

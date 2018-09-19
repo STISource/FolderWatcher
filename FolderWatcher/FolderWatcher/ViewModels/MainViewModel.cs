@@ -37,6 +37,8 @@ namespace FolderWatcher.ViewModels
 
         public ICommand OpenSettings { get; set; }
 
+        public ICommand ExitApplication { get; set; }
+
         public string ToolTip
         {
             get
@@ -54,6 +56,7 @@ namespace FolderWatcher.ViewModels
             this.notificationHistoryService = iocContainer.Resolve<INotificationHistoryService>();
             this.DismissAll = new SimpleCommand(() => true, this.DismissAllNotifications);
             this.OpenSettings = new SimpleCommand(() => true, this.DisplaySettings);
+            this.ExitApplication = new SimpleCommand(() => true, this.ExitRunningApplication);
             this.windowManager = iocContainer.Resolve<IWindowManager>();
             
             this.ReapplySettings();            
@@ -183,6 +186,11 @@ namespace FolderWatcher.ViewModels
         private void NotifyOfPropertyChanges(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ExitRunningApplication()
+        {            
+            App.Current.Shutdown();            
         }
     }
 }
