@@ -81,7 +81,7 @@ namespace FolderWatcher.ViewModels
             var notifications = this.notificationHistoryService.ReadAll();
             foreach(var notification in notifications)
             {
-                var vm = new NotificationViewModel(notification);
+                var vm = new NotificationViewModel(notification, this.iocContainer);
                 vm.OnDismiss += this.NotificationDismissed;                
                 this.Notifications.Add(vm);
             }
@@ -100,11 +100,21 @@ namespace FolderWatcher.ViewModels
                                                 File = file.FileName.Substring(file.FileName.LastIndexOf('\\') + 1)
                                             };
 
-                    var vm = new NotificationViewModel(notification);
+                    var vm = new NotificationViewModel(notification, this.iocContainer);
                     vm.OnDismiss += this.NotificationDismissed;
                     this.notificationHistoryService.Create(notification);
                     this.Notifications.Add(vm);                    
                 });
+            }
+
+            // remove notifications for files already removed 
+            var notificationsToRemove = this.Notifications.Where(x => !System.IO.File.Exists(x.Notification.Folder + "\\" + x.Notification.File)).ToList();
+            foreach(var vm in notificationsToRemove)
+            {                
+                App.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    vm.DismissNotification();
+                });                
             }
 
             this.windowManager.ShowBalloon(Resources.NewFilesDetected_Title, string.Join(Environment.NewLine, args.CreatedFiles.Select(x => x.FileName)));

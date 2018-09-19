@@ -105,18 +105,20 @@
     <Compile Include="Models\FolderContentSnapshot.cs" />
     <Compile Include="Models\FolderDetails.cs" />
     <Compile Include="Models\NewFileNotification.cs" />
-    <Compile Include="Services\INotificationHistoryService.cs" />
-    <Compile Include="Services\IWindowManager.cs" />
+    <Compile Include="Services\ExternalProgramService.cs" />
+    <Compile Include="Services\Interfaces\IExternalProgramService.cs" />
+    <Compile Include="Services\Interfaces\INotificationHistoryService.cs" />
+    <Compile Include="Services\Interfaces\IWindowManager.cs" />
     <Compile Include="Services\NoSqlNotificationHistoryService.cs" />
     <Compile Include="Services\NoSqlSnapshotService.cs" />
-    <Compile Include="Services\IFolderContentSnapshotService.cs" />
+    <Compile Include="Services\Interfaces\IFolderContentSnapshotService.cs" />
     <Compile Include="Services\WindowManager.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\ISettingsService.cs" />
+    <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\SettingsView.xaml.cs">

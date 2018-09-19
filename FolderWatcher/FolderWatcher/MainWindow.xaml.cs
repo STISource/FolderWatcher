@@ -21,6 +21,7 @@ namespace FolderWatcher
             container.RegisterInstance<INotificationHistoryService>(new NoSqlNotificationHistoryService());
             container.RegisterInstance<IWindowManager>(new WindowManager(this));
             container.RegisterType<IFolderWatcher, ComparativeFolderWatcher>();
+            container.RegisterType<IExternalProgramService, ExternalProgramService>();
 
             container.Resolve<IWindowManager>().LoadMainView(new MainViewModel(container));
 
