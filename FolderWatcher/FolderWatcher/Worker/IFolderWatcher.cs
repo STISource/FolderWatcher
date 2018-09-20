@@ -19,6 +19,7 @@ namespace FolderWatcher.Worker
     public class FolderContentChangedEventArgs : EventArgs
     {
         public IEnumerable<FileDetails> CreatedFiles { get; set; }
+        public IEnumerable<FileDetails> DeletedFiles { get; set; }
     }
 
     public delegate void FolderContentChangedEventHandler(object sender, FolderContentChangedEventArgs args);

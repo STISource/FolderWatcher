@@ -7,36 +7,60 @@ namespace FolderWatcher.Worker
 {
     public static class FolderContentComparer
     {
-        private static string[] excludedFiles = { "thumbs.db", ".ppinfocache" };
+        private static string[] excludedFiles = { "thumbs.db", ".ppinfocache", "desktop.ini" };
 
-        public static IEnumerable<FileDetails> GetNewFiles(FolderDetails folderDetails, FolderContentSnapshot snapshot)
+        public static IEnumerable<FileDetails> GetNewFiles(FolderContentSnapshot newSnapshot, FolderContentSnapshot oldSnapshot)
         {
-            var newFiles = new List<FileDetails>();
+            var newFiles = new List<FileDetails>();            
 
-            var existingFiles = Directory.GetFiles(folderDetails.FolderName, "*", SearchOption.TopDirectoryOnly);
-
-            foreach(var file in existingFiles)
+            foreach(var file in newSnapshot.Files)
             {
-                var fileNameOnly = file.Substring(file.LastIndexOf('\\') + 1).ToLower();
+                var fileNameOnly = file.FileName.Substring(file.FileName.LastIndexOf('\\') + 1).ToLower();
 
                 if (excludedFiles.Contains(fileNameOnly))
                 {
                     continue;
                 }
 
-                if(snapshot.Files.All(x => x.FileName.ToLower() != file.ToLower()))
-                {
-                    var fileInfo = new FileInfo(file);
+                if(oldSnapshot.Files.All(x => x.FileName.ToLower() != file.FileName.ToLower()))
+                {                    
                     newFiles.Add(new FileDetails
                     {
-                        FileName = file,
-                        ChangeDate = fileInfo.LastWriteTime,
-                        FolderId = folderDetails.FolderId
+                        FileName = file.FileName,
+                        ChangeDate = file.ChangeDate,
+                        FolderId = newSnapshot.FolderId
                     });
                 }
             }
 
             return newFiles;
+        }
+
+        public static IEnumerable<FileDetails> GetDeletedFiles(FolderContentSnapshot newSnapshot, FolderContentSnapshot oldSnapshot)
+        {
+            var deletedFiles = new List<FileDetails>();
+
+            foreach (var file in oldSnapshot.Files)
+            {
+                var fileNameOnly = file.FileName.Substring(file.FileName.LastIndexOf('\\') + 1).ToLower();
+
+                if (excludedFiles.Contains(fileNameOnly))
+                {
+                    continue;
+                }
+
+                if (newSnapshot.Files.All(x => x.FileName.ToLower() != file.FileName.ToLower()))
+                {                    
+                    deletedFiles.Add(new FileDetails
+                    {
+                        FileName = file.FileName,
+                        ChangeDate = file.ChangeDate,
+                        FolderId = newSnapshot.FolderId
+                    });
+                }
+            }
+
+            return deletedFiles;
         }
     }
 }

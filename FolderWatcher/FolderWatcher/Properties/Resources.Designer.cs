@@ -79,6 +79,26 @@ namespace FolderWatcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon FolderWatcher {
+            get {
+                object obj = ResourceManager.GetObject("FolderWatcher", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon FolderWatcher_Notify {
+            get {
+                object obj = ResourceManager.GetObject("FolderWatcher_Notify", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Neue Dateien.
         /// </summary>
         public static string NewFilesDetected_Title {

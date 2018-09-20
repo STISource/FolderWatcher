@@ -46,25 +46,28 @@ namespace FolderWatcher.Worker
                 return;
             }
 
-            var snapshot = this.snapshotService.ReadSnapshot(this.WatchedFolder.FolderId);
-            var newFiles = FolderContentComparer.GetNewFiles(this.WatchedFolder, snapshot);
+            var oldSnapshot = this.snapshotService.ReadSnapshot(this.WatchedFolder.FolderId);
+            var currentSnapshot = this.snapshotService.CreateSnapshot(this.WatchedFolder);
+            var newFiles = FolderContentComparer.GetNewFiles(currentSnapshot, oldSnapshot);
+            var deletedFiles = FolderContentComparer.GetDeletedFiles(currentSnapshot, oldSnapshot);
 
-            if (newFiles != null && newFiles.Any())
+            if ((newFiles != null && newFiles.Any())
+                || (deletedFiles != null && deletedFiles.Any()))
             {
-                this.RaiseFolderContentChange(newFiles);                
+                this.RaiseFolderContentChange(newFiles, deletedFiles);                
             }
 
-            // save potential changes into snapshot
-            var newSnapshot = this.snapshotService.CreateSnapshot(this.WatchedFolder);
-            newSnapshot.Id = snapshot.Id;
-            this.snapshotService.UpdateSnapshot(newSnapshot);
+            // save potential changes into snapshot            
+            currentSnapshot.Id = oldSnapshot.Id;
+            this.snapshotService.UpdateSnapshot(currentSnapshot);
         }
 
-        private void RaiseFolderContentChange(IEnumerable<FileDetails> createdFiles)
+        private void RaiseFolderContentChange(IEnumerable<FileDetails> createdFiles, IEnumerable<FileDetails> deletedFiles)
         {
             this.FolderContentChanged?.Invoke(this, new FolderContentChangedEventArgs
             {
-                CreatedFiles = createdFiles
+                CreatedFiles = createdFiles,
+                DeletedFiles = deletedFiles
             });
         }
     }

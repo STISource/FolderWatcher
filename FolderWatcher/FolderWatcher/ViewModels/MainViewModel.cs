@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 using FolderWatcher.Helpers;
 using FolderWatcher.Models;
 using FolderWatcher.Properties;
@@ -23,7 +24,7 @@ namespace FolderWatcher.ViewModels
 
         private readonly INotificationHistoryService notificationHistoryService;
 
-        private FolderWatcherSettings settings;
+        private FolderWatcherSettings settings;        
 
         private IWindowManager windowManager;
 
@@ -47,6 +48,16 @@ namespace FolderWatcher.ViewModels
                     ? string.Format(Resources.NewFilesNotification, this.Notifications.Count())
                     : Resources.NoNewFilesNotification;
             }
+        }
+
+        public string Icon
+        {
+            get
+            {
+                return this.Notifications.Any() 
+                    ? "../Icons/FolderWatcher_Notify.ico" 
+                    : "../Icons/FolderWatcher.ico";
+            }            
         }
 
         public MainViewModel(IUnityContainer iocContainer)
@@ -92,6 +103,8 @@ namespace FolderWatcher.ViewModels
                 vm.OnDismiss += this.NotificationDismissed;                
                 this.Notifications.Add(vm);
             }
+
+            this.NotifyOfPropertyChanges("Icon");
         }
 
         private void FolderContentChanged(object sender, FolderContentChangedEventArgs args)
@@ -115,20 +128,29 @@ namespace FolderWatcher.ViewModels
                 });
             }
 
-            // remove notifications for files already removed 
-            var notificationsToRemove = this.Notifications.Where(x => !System.IO.File.Exists(x.Notification.Folder + "\\" + x.Notification.File)).ToList();
-            foreach(var vm in notificationsToRemove)
+            if (args.CreatedFiles != null && args.CreatedFiles.Any())
             {
-                logger.Info("Removing notification for deleted file: {0}", vm.Notification.File);
-                App.Current.Dispatcher.Invoke((Action)delegate
-                {
-                    vm.DismissNotification();
-                });                
+                this.windowManager.ShowBalloon(Resources.NewFilesDetected_Title, string.Join(Environment.NewLine, args.CreatedFiles.Select(x => x.FileName)));
             }
 
-            this.windowManager.ShowBalloon(Resources.NewFilesDetected_Title, string.Join(Environment.NewLine, args.CreatedFiles.Select(x => x.FileName)));
+            // remove notifications for removed files
+            foreach (var deletedFile in args.DeletedFiles)
+            {
+                logger.Info("Removing notification for deleted file: {0}", deletedFile.FileName);
+
+                var notification = this.Notifications.SingleOrDefault(x => (x.Notification.Folder + "\\" + x.Notification.File).ToLower() == deletedFile.FileName.ToLower());
+
+                if (notification != null)
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        notification.DismissNotification();
+                    });
+                }
+            }           
 
             this.NotifyOfPropertyChanges("ToolTip");
+            this.NotifyOfPropertyChanges("Icon");
         }
 
         private void DismissAllNotifications()
@@ -143,6 +165,7 @@ namespace FolderWatcher.ViewModels
             this.Notifications.Clear();
 
             this.NotifyOfPropertyChanges("ToolTip");
+            this.NotifyOfPropertyChanges("Icon");
         }
 
         private void DisplaySettings()
@@ -181,6 +204,7 @@ namespace FolderWatcher.ViewModels
             this.Notifications.Remove(vm);
 
             this.NotifyOfPropertyChanges("ToolTip");
+            this.NotifyOfPropertyChanges("Icon");
         }
 
         private void NotifyOfPropertyChanges(string propertyName)

@@ -19,7 +19,7 @@
         </Grid.Resources>       
 
 
-        <tb:TaskbarIcon Name="WatcherTaskbarIcon" IconSource="../Icons/FolderWatcher.ico">
+        <tb:TaskbarIcon Name="WatcherTaskbarIcon" IconSource="{Binding Icon}">
             <tb:TaskbarIcon.TrayToolTip>
                 <Border Background="White" BorderBrush="DarkGray" BorderThickness="1">
                     <TextBlock Padding="3" Text="{Binding ToolTip}" />

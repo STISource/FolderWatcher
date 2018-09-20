@@ -188,6 +188,11 @@
   <ItemGroup>
     <Resource Include="Icons\FolderWatcher.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\FolderWatcher_Notify.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DefaultIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
