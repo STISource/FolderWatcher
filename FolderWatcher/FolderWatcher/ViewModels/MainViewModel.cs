@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Media;
 using FolderWatcher.Helpers;
 using FolderWatcher.Models;
 using FolderWatcher.Properties;
@@ -60,6 +59,14 @@ namespace FolderWatcher.ViewModels
             }            
         }
 
+        public bool IsIconVisible
+        {
+            get
+            {
+                return !this.settings.HideTrayIconIfNoNotifications || this.Notifications.Any();
+            }
+        }
+
         public MainViewModel(IUnityContainer iocContainer)
         {
             this.iocContainer = iocContainer;
@@ -105,6 +112,8 @@ namespace FolderWatcher.ViewModels
             }
 
             this.NotifyOfPropertyChanges("Icon");
+            this.NotifyOfPropertyChanges("ToolTip");
+            this.NotifyOfPropertyChanges("IsIconVisible");
         }
 
         private void FolderContentChanged(object sender, FolderContentChangedEventArgs args)
@@ -151,6 +160,7 @@ namespace FolderWatcher.ViewModels
 
             this.NotifyOfPropertyChanges("ToolTip");
             this.NotifyOfPropertyChanges("Icon");
+            this.NotifyOfPropertyChanges("IsIconVisible");
         }
 
         private void DismissAllNotifications()
@@ -166,6 +176,7 @@ namespace FolderWatcher.ViewModels
 
             this.NotifyOfPropertyChanges("ToolTip");
             this.NotifyOfPropertyChanges("Icon");
+            this.NotifyOfPropertyChanges("IsIconVisible");
         }
 
         private void DisplaySettings()
@@ -177,7 +188,7 @@ namespace FolderWatcher.ViewModels
         {
             if (settingsHaveBeenSaved)
             {
-                this.ReapplySettings();
+                this.ReapplySettings();                
             }
         }
 
@@ -205,6 +216,7 @@ namespace FolderWatcher.ViewModels
 
             this.NotifyOfPropertyChanges("ToolTip");
             this.NotifyOfPropertyChanges("Icon");
+            this.NotifyOfPropertyChanges("IsIconVisible");
         }
 
         private void NotifyOfPropertyChanges(string propertyName)

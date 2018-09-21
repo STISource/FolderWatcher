@@ -162,6 +162,15 @@ namespace FolderWatcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Icon ausblenden wenn es keine Benachrichtigungen gibt.
+        /// </summary>
+        public static string Settings_HideTrayIconIfNoNotification {
+            get {
+                return ResourceManager.GetString("Settings_HideTrayIconIfNoNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Löschen.
         /// </summary>
         public static string Settings_RemoveFolder_LinkText {

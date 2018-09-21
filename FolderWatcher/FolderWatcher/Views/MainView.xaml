@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:tb="http://www.hardcodet.net/taskbar"
              xmlns:p="clr-namespace:FolderWatcher.Properties"
+             xmlns:conv="clr-namespace:FolderWatcher.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -16,10 +17,11 @@
                     <PropertyGroupDescription PropertyName="Notification.Folder" />
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
-        </Grid.Resources>       
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        </Grid.Resources>
 
 
-        <tb:TaskbarIcon Name="WatcherTaskbarIcon" IconSource="{Binding Icon}">
+        <tb:TaskbarIcon Name="WatcherTaskbarIcon" IconSource="{Binding Icon}" Visibility="{Binding IsIconVisible, Converter={StaticResource BoolToVisibilityConverter}}">
             <tb:TaskbarIcon.TrayToolTip>
                 <Border Background="White" BorderBrush="DarkGray" BorderThickness="1">
                     <TextBlock Padding="3" Text="{Binding ToolTip}" />
@@ -40,7 +42,7 @@
                         </Grid.RowDefinitions>
                         
                         <Grid Grid.Row="0"
-                              Background="LightBlue">
+                              Background="#DDE8F0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="1*" />
@@ -92,7 +94,7 @@
                         </ScrollViewer>
 
                         <Grid Grid.Row="2"
-                              Background="LightBlue">
+                              Background="#DDE8F0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="1*" />

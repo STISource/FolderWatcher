@@ -106,6 +106,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\SimpleCommand.cs" />
     <Compile Include="Models\FileDetails.cs" />
     <Compile Include="Models\FolderContentSnapshot.cs" />

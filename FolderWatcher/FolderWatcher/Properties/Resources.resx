@@ -151,6 +151,9 @@
   <data name="Settings_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="Settings_HideTrayIconIfNoNotification" xml:space="preserve">
+    <value>Icon ausblenden wenn es keine Benachrichtigungen gibt</value>
+  </data>
   <data name="Settings_RemoveFolder_LinkText" xml:space="preserve">
     <value>Löschen</value>
   </data>

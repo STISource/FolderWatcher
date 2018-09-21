@@ -8,17 +8,20 @@
         Title="Einstellungen" Height="300" Width="497" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/FolderWatcher;component/Icons/FolderWatcher.ico" WindowStyle="None" Topmost="True">
     <Grid>
         <Border BorderBrush="DarkGray" BorderThickness="1">
-            <Grid>
+            <Grid Background="#DDE8F0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="35" />
+                    <RowDefinition Height="38" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="1" Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />                        
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="35" />
                     </Grid.RowDefinitions>
+                    
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft">                
                         <TextBlock Margin="10,0,10,0">
                             <Hyperlink Command="{Binding RemoveFolder}">
@@ -32,6 +35,8 @@
                         </TextBlock>
                     </StackPanel>
                     <DataGrid Name="FoldersDataGrid"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
                                 Grid.Row="1" 
                                 ItemsSource="{Binding Settings.Folders}" 
                                 SelectedItem="{Binding SelectedFolder}" 
@@ -40,14 +45,15 @@
                                 CanUserAddRows="False"
                                 Margin="3">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ordner" SortMemberPath="FolderName" Binding="{Binding FolderName}" />                
+                            <DataGridTextColumn Header="Ordner" Width="400" SortMemberPath="FolderName" Binding="{Binding FolderName}" />                
                         </DataGrid.Columns>            
                     </DataGrid>
-                </Grid>
+                    <CheckBox Grid.Row="2" Margin="3" IsChecked="{Binding Settings.HideTrayIconIfNoNotifications}" Content="{x:Static p:Resources.Settings_HideTrayIconIfNoNotification}" />
+                </Grid>                
 
-                <StackPanel Background="LightBlue" Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
-                    <Button Margin="2" Command="{Binding Cancel}" Content="{x:Static p:Resources.Settings_Cancel}" />
-                    <Button Margin="2" Command="{Binding SaveSettings}" Content="{x:Static p:Resources.Settings_Save}" />
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="2">
+                    <Button Margin="3,5,3,5" Command="{Binding Cancel}" Content="{x:Static p:Resources.Settings_Cancel}" />
+                    <Button Margin="3,5,3,5" Command="{Binding SaveSettings}" Content="{x:Static p:Resources.Settings_Save}" />
                 </StackPanel>
             </Grid>
         </Border>
