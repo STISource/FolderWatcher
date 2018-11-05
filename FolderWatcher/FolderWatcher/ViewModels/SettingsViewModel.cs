@@ -20,6 +20,8 @@ namespace FolderWatcher.ViewModels
 
         private FolderDetails selectedFolder;
 
+        private int meineSuperÄnderung; // neu
+
         public FolderWatcherSettings Settings
         {
             get
