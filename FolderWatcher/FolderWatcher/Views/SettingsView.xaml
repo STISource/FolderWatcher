@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
         xmlns:p="clr-namespace:FolderWatcher.Properties"
         mc:Ignorable="d"
-        Title="Einstellungen" Height="300" Width="497" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/FolderWatcher;component/Icons/FolderWatcher.ico" WindowStyle="None" Topmost="True">
+        Title="Einstellungen" Height="320" Width="490" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/FolderWatcher;component/Icons/FolderWatcher.ico" WindowStyle="None" Topmost="True">
     <Grid>
         <Border BorderBrush="DarkGray" BorderThickness="1">
             <Grid Background="#DDE8F0">
@@ -19,7 +19,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />                        
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="35" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft">                
@@ -49,6 +50,7 @@
                         </DataGrid.Columns>            
                     </DataGrid>
                     <CheckBox Grid.Row="2" Margin="3" IsChecked="{Binding Settings.HideTrayIconIfNoNotifications}" Content="{x:Static p:Resources.Settings_HideTrayIconIfNoNotification}" />
+                    <CheckBox Grid.Row="3" Margin="3" IsChecked="{Binding Settings.KeepNotificationsForDeletedFiles}" Content="{x:Static p:Resources.Settings_KeepNotificationsForDeletedFiles}" />
                 </Grid>                
 
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="2">

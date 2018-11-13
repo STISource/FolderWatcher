@@ -9,6 +9,8 @@ namespace FolderWatcher.Models
     {
         private bool hideTrayIconIfNoNotifications;
 
+        private bool keepNotificationsForDeletedFiles;
+
         private ObservableCollection<FolderDetails> folders;
 
         [DataMember]
@@ -25,6 +27,24 @@ namespace FolderWatcher.Models
                 {
                     this.hideTrayIconIfNoNotifications = value;
                     this.RaisePropertyChanged("HideTrayIconIfNoNotifications");
+                }
+            }
+        }
+
+        [DataMember]
+        public bool KeepNotificationsForDeletedFiles
+        {
+            get
+            {
+                return this.keepNotificationsForDeletedFiles;
+            }
+
+            set
+            {
+                if (this.keepNotificationsForDeletedFiles != value)
+                {
+                    this.keepNotificationsForDeletedFiles = value;
+                    this.RaisePropertyChanged("KeepNotificationsForDeletedFiles");
                 }
             }
         }

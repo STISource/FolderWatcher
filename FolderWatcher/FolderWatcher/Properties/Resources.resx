@@ -154,6 +154,9 @@
   <data name="Settings_HideTrayIconIfNoNotification" xml:space="preserve">
     <value>Icon ausblenden wenn es keine Benachrichtigungen gibt</value>
   </data>
+  <data name="Settings_KeepNotificationsForDeletedFiles" xml:space="preserve">
+    <value>Einträge in Liste belassen wenn Dateien verschwinden</value>
+  </data>
   <data name="Settings_RemoveFolder_LinkText" xml:space="preserve">
     <value>Löschen</value>
   </data>

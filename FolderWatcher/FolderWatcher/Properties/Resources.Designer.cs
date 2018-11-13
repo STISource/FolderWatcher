@@ -171,6 +171,15 @@ namespace FolderWatcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Einträge in Liste belassen wenn Dateien verschwinden.
+        /// </summary>
+        public static string Settings_KeepNotificationsForDeletedFiles {
+            get {
+                return ResourceManager.GetString("Settings_KeepNotificationsForDeletedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Löschen.
         /// </summary>
         public static string Settings_RemoveFolder_LinkText {

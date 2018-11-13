@@ -142,21 +142,24 @@ namespace FolderWatcher.ViewModels
                 this.windowManager.ShowBalloon(Resources.NewFilesDetected_Title, string.Join(Environment.NewLine, args.CreatedFiles.Select(x => x.FileName)));
             }
 
-            // remove notifications for removed files
-            foreach (var deletedFile in args.DeletedFiles)
+            // remove notifications for removed files if this is desired
+            if (!this.settings.KeepNotificationsForDeletedFiles)
             {
-                logger.Info("Removing notification for deleted file: {0}", deletedFile.FileName);
-
-                var notification = this.Notifications.SingleOrDefault(x => (x.Notification.Folder + "\\" + x.Notification.File).ToLower() == deletedFile.FileName.ToLower());
-
-                if (notification != null)
+                foreach (var deletedFile in args.DeletedFiles)
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    logger.Info("Removing notification for deleted file: {0}", deletedFile.FileName);
+
+                    var notification = this.Notifications.SingleOrDefault(x => (x.Notification.Folder + "\\" + x.Notification.File).ToLower() == deletedFile.FileName.ToLower());
+
+                    if (notification != null)
                     {
-                        notification.DismissNotification();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            notification.DismissNotification();
+                        });
+                    }
                 }
-            }           
+            }
 
             this.NotifyOfPropertyChanges("ToolTip");
             this.NotifyOfPropertyChanges("Icon");
